@@ -4,8 +4,12 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:KhaiBaoYTeKiosk.Views"
+             xmlns:converter ="clr-namespace:KhaiBaoYTeKiosk.Resources.Converter"
              mc:Ignorable="d" 
-             Height="720" Width="1280" Style="{StaticResource CustomFont}">
+            Style="{StaticResource CustomFont}">
+    <UserControl.Resources>
+        <converter:StringToColorConverter x:Key="StringToColorConverter"/>
+    </UserControl.Resources>
     
     <Grid>
         <Grid.RowDefinitions>
@@ -40,13 +44,15 @@
                     </Grid.RowDefinitions>
 
                     <TextBlock Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2"
-                               Text="GIANG BAO NGOC"
+                               Text="{Binding Path=HoTen,Mode=OneTime}"
                                FontSize="24"
                                Foreground="White"
                                HorizontalAlignment="Center"/>
-                    <Border Grid.Row="1" Grid.Column="0" Background="White" HorizontalAlignment="Center">
-                        <Image Source="https://upload.wikimedia.org/wikipedia/commons/thumb/d/d0/QR_code_for_mobile_English_Wikipedia.svg/1200px-QR_code_for_mobile_English_Wikipedia.svg.png"
-                               Width="150"/>
+                    <Border Grid.Row="1" Grid.Column="0" 
+                            Background="White" 
+                            HorizontalAlignment="Center"
+                           Width="150" Height="150">
+                        <Image Source="{Binding Path=QRImage, Mode=OneTime, TargetNullValue={x:Null}}" />
                     </Border>
                     <Image Grid.Row="1" Grid.Column="1"
                            Source="/Resources/Images/ico_RedShield.png"
@@ -59,7 +65,7 @@
                     <Grid.Style>
                         <Style>
                             <Setter Property="TextElement.FontSize"
-                                    Value="19"/>
+                                    Value="21"/>
                             <Setter Property="TextElement.Foreground"
                                     Value="White"/>
                             <Style.Resources>
@@ -92,42 +98,59 @@
                     </Grid.RowDefinitions>
 
                     <TextBlock Grid.Row="0" Grid.Column="0" Text="Ngày khai báo:"/>
-                    <TextBlock Grid.Row="0" Grid.Column="1" Text="11/05/2021 14:48" Margin="20 5 0 5"/>
+                    <TextBlock Grid.Row="0" Grid.Column="1" Text="{Binding Path=NgayKhaiBao, Mode=OneTime}" Margin="20 5 0 5"/>
                     <TextBlock Grid.Row="1" Grid.Column="0" Text="Nơi khai báo:"/>
-                    <TextBlock Grid.Row="1" Grid.Column="1" Text="BỆNH VIỆN ĐA KHOA AN SINH" Margin="20 5 0 5"/>
+                    <TextBlock Grid.Row="1" Grid.Column="1" Text="{Binding Path=NoiKhaiBao, Mode=OneTime}" Margin="20 5 0 5"/>
                     <TextBlock Grid.Row="2" Grid.Column="0" Text="Loại khai báo:"/>
-                    <TextBlock Grid.Row="2" Grid.Column="1" Text="Bệnh nhân/Người nhà" Margin="20 5 0 5"/>
+                    <TextBlock Grid.Row="2" Grid.Column="1" Text="{Binding Path=LoaiKhaiBao, Mode=OneTime}" Margin="20 5 0 5"/>
                     <TextBlock Grid.Row="3" Grid.Column="0" Text="Năm sinh:"/>
-                    <TextBlock Grid.Row="3" Grid.Column="1" Text="1984" Margin="20 5 0 5"/>
+                    <TextBlock Grid.Row="3" Grid.Column="1" Text="{Binding Path=NamSinh, Mode=OneTime}" Margin="20 5 0 5"/>
                     <TextBlock Grid.Row="4" Grid.Column="0" Text="Giới tính:"/>
-                    <TextBlock Grid.Row="4" Grid.Column="1" Text="Nữ" Margin="20 5 0 5"/>
+                    <TextBlock Grid.Row="4" Grid.Column="1" Text="{Binding Path=GioiTinh, Mode=OneTime}" Margin="20 5 0 5"/>
                     <TextBlock Grid.Row="5" Grid.Column="0" Text="Địa chỉ:" />
-                    <TextBlock Grid.Row="5" Grid.Column="1" Text="123 Phường 19, Quận 11, Thành Phố Hồ Chí Minh" Margin="20 5 0 5"/>
-                    <TextBlock Grid.Row="6" Grid.Column="0" Text="Số điện thoại"/>
-                    <TextBlock Grid.Row="6" Grid.Column="1" Text="0938073607" Margin="20 5 0 5"/>
+                    <TextBlock Grid.Row="5" Grid.Column="1" Text="{Binding Path=DiaChi, Mode=OneTime}" Margin="20 5 0 5" TextWrapping="Wrap"/>
+                    <TextBlock Grid.Row="6" Grid.Column="0" Text="Số điện thoại: "/>
+                    <TextBlock Grid.Row="6" Grid.Column="1" Text="{Binding Path=SoDienThoai, Mode=OneTime}" Margin="20 5 0 5"/>
                     <TextBlock Grid.Row="7" Grid.Column="0" Text="Dấu hiệu:"/>
-                    <TextBlock Grid.Row="7" Grid.Column="1" 
-                               Text="Ho, sốt, khó thở, tức ngực, mệt mỏi, buồn nôn, sung lưỡi" 
+                    <TextBlock Grid.Row="7" Grid.Column="1" Name="DauHieu"
+                               Text="{Binding Path=DanhSachTrieuChung, Mode=OneTime}" 
                                Margin="20 5 0 5"
-                               Foreground="Red"/>
-                    <TextBlock Grid.Row="8" Grid.Column="0" Text="Yếu tố dịch tễ:"/>
-                    <TextBlock Grid.Row="8" Grid.Column="1" 
-                               Text="Đi đến hoặc tiếp súc với người từ Vĩnh Phúc hoặc một số vùng của các tỉnh sau:" 
-                               Margin="20 5 0 5"
-                               Foreground="Red"
+                               Foreground="{Binding Path=DanhSachTrieuChung, Mode=OneTime, Converter={StaticResource StringToColorConverter}}"
                                TextWrapping="Wrap"/>
+                    <TextBlock Grid.Row="8" Grid.Column="0" Text="Yếu tố dịch tễ:"/>
+                    <ScrollViewer Grid.Row="8" Grid.Column="1" MaxHeight="160"
+                                  ScrollViewer.PanningMode="VerticalOnly"
+                                  ScrollViewer.VerticalScrollBarVisibility="Auto">
+                        <TextBlock FontSize="19"
+                               Text="{Binding Path=DanhSachDichTe, Mode=OneTime}" 
+                               Margin="20 5 0 5"
+                               Foreground="{Binding Path=DanhSachDichTe, Mode=OneTime, Converter={StaticResource StringToColorConverter}}"
+                               TextWrapping="Wrap"/>
+                    </ScrollViewer>
                     <TextBlock Grid.Row="9" Grid.Column="0" Grid.ColumnSpan="2"
                                Text="Khai báo y tế thành công"
                                Foreground="LawnGreen"/>
                     <TextBlock Grid.Row="10" Grid.Column="0" Grid.ColumnSpan="2"
                                Text="Tuyệt đối tuân thủ 5K và các khuyến cáo của bộ y tế về phòng chống dịch Covid 19"
-                               Foreground="Yellow"/>
-                    <Button Grid.Row="11" Grid.Column="0" Grid.ColumnSpan="2"
-                            Width="300" Height="60"
-                            HorizontalAlignment="Left"
-                            TextElement.FontSize="24"
-                            TextElement.FontWeight="DemiBold"
-                            Content="TRANG CHỦ"/>
+                               Foreground="Yellow"
+                               TextWrapping="WrapWithOverflow"/>
+                    <StackPanel Orientation="Horizontal" Margin="0 0 0 100"
+                                Grid.Row="11" Grid.Column="0" Grid.ColumnSpan="2">
+                        <Button Margin="0 0 5 0"
+                                Background="Red"
+                                Width="300" Height="70"
+                                HorizontalAlignment="Left"
+                                TextElement.FontSize="24"
+                                TextElement.FontWeight="DemiBold"
+                                Content="TIẾP TỤC"/>
+                        <Button Width="300" Height="70"
+                                HorizontalAlignment="Left"
+                                TextElement.FontSize="24"
+                                TextElement.FontWeight="DemiBold"
+                                Content="TIẾP TỤC"
+                                Command="{Binding updateViewCommand}"
+                                CommandParameter="QR"/>
+                    </StackPanel>
                 </Grid>
             </Grid>
         </Border>

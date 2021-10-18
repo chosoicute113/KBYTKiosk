@@ -1,4 +1,6 @@
-﻿using KhaiBaoYTeKiosk.ViewModels;
+﻿using KhaiBaoYTeKiosk.API;
+using KhaiBaoYTeKiosk.Models;
+using KhaiBaoYTeKiosk.ViewModels;
 using MVVMEssentials.Commands;
 using System;
 using System.Collections.Generic;
@@ -12,18 +14,46 @@ namespace KhaiBaoYTeKiosk.Resources.Command
 {
     class LoginCommand : CommandBase
     {
-        private readonly LoginViewModel _vm;
+        private readonly LoginViewModel LoginVM;
         public LoginCommand(LoginViewModel vm)
         {
-            _vm = vm;
+            LoginVM = vm;
         }
-        public override void Execute(object parameter)
+        public override async void Execute(object parameter)
         {
-            if (_vm.Username != _vm.loginUsername || _vm.Password != _vm.loginPassword)
+            Debug.WriteLine("Inside the LoginCommand");
+            if (String.IsNullOrWhiteSpace(LoginVM.Username) || String.IsNullOrWhiteSpace(LoginVM.Password))
             {
-                _vm.ErrorModal = Visibility.Visible;
+                LoginVM.editErrorModal("THÔNG BÁO",
+                "Vui lòng nhập đầy đủ thông tin",
+                "/Resources/Images/ico_error_warn.png");
+                LoginVM.ErrorModal = Visibility.Visible;
             }
-            else _vm.mainvm.SelectedViewModel = new QRCheckinViewModel();
+            else
+            {
+                try
+                {
+                    var URL = "https://kbyt.khambenh.gov.vn/api/v1/login";
+                    var account = new Account() { data = LoginVM.Username, password = LoginVM.Password };
+                    User user = await LoginProcessor.LoadProcessor(URL, account);
+                    if (user != null)
+                    {
+                        LoginVM.MainVM.MainUser = user;
+                        LoginVM.MainVM.SelectedViewModel = new QRCheckinViewModel(LoginVM.MainVM);
+                        Debug.WriteLine("API Calls successfully");
+
+                    }
+                }
+                catch (Exception e)
+                {
+                    LoginVM.editErrorModal("LỖI ĐĂNG NHẬP",
+                                    "Thông tin nhập vào sai",
+                                    "/Resources/Images/ico_error_login.png");
+                    LoginVM.ErrorModal = Visibility.Visible;
+                    Debug.WriteLine("API Calls fail");
+                    Debug.WriteLine(e.Message);
+                }
+            }
         }
     }
 }

@@ -32,7 +32,7 @@ namespace KhaiBaoYTeKiosk.Resources.Command
                     }
                 case "QR":
                     {
-                        _viewModel.SelectedViewModel = new QRCheckinViewModel();
+                        _viewModel.SelectedViewModel = new QRCheckinViewModel(_viewModel);
                         break;
                     }
             }

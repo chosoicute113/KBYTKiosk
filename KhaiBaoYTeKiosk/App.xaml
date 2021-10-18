@@ -12,9 +12,6 @@
         <DataTemplate DataType="{x:Type viewmodels:QRCheckinViewModel}">
             <views:QRCheckinView/>
         </DataTemplate>
-        <DataTemplate DataType="{x:Type viewmodels:HealthDeclarationViewModel}">
-            <views:HealthDeclarationView/>
-        </DataTemplate>
         <DataTemplate DataType="{x:Type viewmodels:LoginViewModel}">
             <views:LoginView/>
         </DataTemplate>

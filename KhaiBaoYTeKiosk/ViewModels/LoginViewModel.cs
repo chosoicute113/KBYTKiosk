@@ -9,8 +9,41 @@ namespace KhaiBaoYTeKiosk.ViewModels
     {
         public string loginUsername = "admin";
         public string loginPassword = "admin";
-        public MainViewModel mainvm;
+        public MainViewModel MainVM;
         private Visibility _errorModal = Visibility.Collapsed;
+
+        private string _errorMessage = "ERROR MESSAGE";
+        public string ErrorNessage
+        {
+            get { return _errorMessage; }
+            set
+            {
+                _errorMessage = value;
+                OnPropertyChanged(nameof(ErrorNessage));
+            }
+        }
+
+        private string _errorTitle = "ERROR TITLE";
+        public string ErrorTitle
+        {
+            get { return _errorTitle; }
+            set
+            {
+                _errorTitle = value;
+                OnPropertyChanged(nameof(ErrorTitle));
+            }
+        }
+
+        private string _errorImage = "/Resources/Images/ico_error_login.png";
+        public string ErrorImage
+        {
+            get { return _errorImage; }
+            set
+            {
+                _errorImage = value;
+                OnPropertyChanged(nameof(ErrorImage));
+            }
+        }
         public Visibility ErrorModal
         {
             get { return _errorModal; }
@@ -36,8 +69,15 @@ namespace KhaiBaoYTeKiosk.ViewModels
         public ICommand LoginCommand { get; set; }
         public LoginViewModel(MainViewModel mvm)
         {
-            mainvm = mvm;
+            MainVM = mvm;
             LoginCommand = new LoginCommand(this);
+        }
+
+        public void editErrorModal(string title, string description, string imagepath)
+        {
+            ErrorNessage = description;
+            ErrorImage = imagepath;
+            ErrorTitle = title;
         }
     }
 }

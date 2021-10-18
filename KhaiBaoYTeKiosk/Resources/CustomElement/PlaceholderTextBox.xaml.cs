@@ -14,7 +14,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace KhaiBaoYTeKiosk.CustomControl
+namespace KhaiBaoYTeKiosk.Resources.CustomElement
 {
     /// <summary>
     /// Interaction logic for PlaceholderTextBox.xaml

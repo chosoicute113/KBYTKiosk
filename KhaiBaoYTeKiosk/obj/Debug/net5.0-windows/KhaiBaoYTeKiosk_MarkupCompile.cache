@@ -10,11 +10,11 @@ none
 false
 TRACE;DEBUG;NET;NET5_0;NETCOREAPP
 C:\WCH.CN\KhaiBaoYTeRep\KhaiBaoYTeKiosk\KhaiBaoYTeKiosk\App.xaml
-7-1528343009
+7-2079446500
 
-19-615951103
-194-1926508062
-MainWindow.xaml;Resources\CustomElement\PlaceholderPasswordBox.xaml;Resources\CustomElement\PlaceholderTextBox.xaml;Views\CheckinInfoView.xaml;Views\HealthDeclarationView.xaml;Views\LoginView.xaml;Views\QRCheckinView.xaml;
+34-1551030919
+1971191539915
+MainWindow.xaml;Resources\CustomElement\PlaceholderPasswordBox.xaml;Resources\CustomElement\PlaceholderScannerTextBox.xaml;Resources\CustomElement\PlaceholderTextBox.xaml;Views\CheckinInfoView.xaml;Views\LoginView.xaml;Views\QRCheckinView.xaml;
 
 False
 

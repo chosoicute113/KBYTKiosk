@@ -21,7 +21,7 @@ namespace KhaiBaoYTeKiosk.ViewModels
         public ICommand UpdateViewCommand { get; set; }
         public HealthDeclarationViewModel(MainViewModel mainView)
         {
-            _modalViewModel = new QRCheckinViewModel();
+            _modalViewModel = new QRCheckinViewModel(mainView);
             UpdateViewCommand = new UpdateViewCommand(mainView);
         }
     }

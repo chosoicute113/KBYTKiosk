@@ -4,9 +4,9 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:KhaiBaoYTeKiosk.Views"
-             xmlns:custom="clr-namespace:KhaiBaoYTeKiosk.CustomControl"
+             xmlns:custom="clr-namespace:KhaiBaoYTeKiosk.Resources.CustomElement"
              mc:Ignorable="d" 
-             Height="720" Width="1280" Style="{StaticResource CustomFont}">
+             Style="{StaticResource CustomFont}">
     <Grid>
         <!-- Setting up 4 columns and 3 rows-->
         <Grid.ColumnDefinitions>
@@ -49,15 +49,15 @@
                             <Image Width="30" Margin="15 5" Source="/Resources/Images/logo_user.png" Stretch="Uniform" StretchDirection="Both"/>
                             <custom:PlaceholderTextBox Text="{Binding Path=Username, Mode=TwoWay}" 
                                                        PlaceholderText="Nhập tài khoản"
-                                                       VerticalContentAlignment="Center">
-                                
-                            </custom:PlaceholderTextBox>
+                                                       VerticalContentAlignment="Center"/>
                         </DockPanel>
                     </Border>
                     <Border  Margin="0 0 0 50" Padding="0 10" CornerRadius="15" Background="White">
                         <DockPanel>
                             <Image Width="30" DockPanel.Dock="Left" Margin="15 5" Source="/Resources/Images/logo_password.png"/>
-                            <custom:PlaceholderPasswordBox Password="{Binding Path=Password, Mode=TwoWay}" PlaceholderText="Nhập mật khẩu"/>
+                            <custom:PlaceholderPasswordBox Password="{Binding Path=Password, Mode=TwoWay}" 
+                                                           VerticalContentAlignment="Center"
+                                                           PlaceholderText="Nhập mật khẩu"/>
                         </DockPanel>
                     </Border>
                     <Button Name="SignInButton" Padding="60 20" Margin="0 0 0 40" 
@@ -67,7 +67,7 @@
             </Border>
             <Image Source="/Resources/images/Logo_SoYTeHCM.png" Grid.Row="0" Grid.RowSpan="2"  Height="150" VerticalAlignment="Top" Margin="0,0,0,0"/>
         </Grid>
-        <!-- WARNING MESSAGE MODAL -->
+        <!-- ERROR MESSAGE MODAL -->
         <Border x:Name="ErrorMessageModal" Visibility="{Binding Path=ErrorModal, Mode=TwoWay}"
                 Grid.Row="0" Grid.RowSpan="3" 
                 Grid.Column="0" Grid.ColumnSpan="4">
@@ -89,17 +89,14 @@
                         HorizontalAlignment="Stretch">
                     <StackPanel HorizontalAlignment="Center"
                                 Margin="50 50">
-                        <Image Source="/Resources/Images/ico_error_login.png"
+                        <Image Source="{Binding Path=ErrorImage,Mode=OneWay}"
                                Width="150"/>
-                        <TextBlock FontSize="46" Foreground="OrangeRed" FontWeight="DemiBold"
-                                   TextAlignment="Center" Margin="0 10 0 0">
-                            LỖI ĐĂNG NHẬP
-                        </TextBlock>
+                        <TextBlock FontSize="46" Foreground="OrangeRed" 
+                                   FontWeight="DemiBold" Text="{Binding Path=ErrorTitle,Mode=OneWay}"
+                                   TextAlignment="Center" Margin="0 10 0 0"/>
                         <TextBlock FontSize="28" Foreground="#6E6E6E" FontWeight="DemiBold"
                                    TextAlignment="Center"
-                                   Margin="0 5">
-                            Unknown Error
-                        </TextBlock>
+                                   Margin="0 5" Text="{Binding Path=ErrorNessage, Mode=OneWay}"/>
                         <Button Content="Đồng Ý" TextElement.FontSize="21" Name="ErrorAgree_Btn" Click="ErrorAgree_btn_Click"
                                 Padding="60 20" Margin="0 10"
                                 HorizontalAlignment="Center"/>
